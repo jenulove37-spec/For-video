@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radha Krishna AI Reel Maker</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#100d20;color:#fff}
+header{text-align:center;padding:28px 15px;background:linear-gradient(135deg,#4b176e,#c05283,#e5a44b)}
+h1{margin:0;font-size:27px}
+header p{margin:10px 0 0}
+main{max-width:720px;margin:auto;padding:16px}
+.card{background:#201a32;border:1px solid #49375f;border-radius:16px;padding:18px;margin-bottom:16px}
+label{display:block;margin:14px 0 7px;font-weight:bold}
+select,input,textarea{width:100%;padding:12px;border-radius:9px;border:1px solid #65527c;background:#151121;color:white;font-size:15px}
+button{border:0;border-radius:9px;padding:13px 15px;font-weight:bold;cursor:pointer}
+.primary{background:#f1bd68;color:#27142c;width:100%;margin-top:18px}
+.secondary{background:#68418a;color:white;margin:5px 3px 0 0}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.checks label{font-weight:normal;margin:4px 0}
+textarea{min-height:260px;line-height:1.5;resize:vertical}
+footer{text-align:center;color:#b9a9cb;padding:20px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>Radha Krishna AI Reel Maker</h1>
+<p>Create cinematic devotional video prompts for Seedance AI</p>
+</header>
+<main>
+<div class="card">
+<h2>✨ Create Your Reel Prompt</h2>
+<label for="scene">Choose Scene</label>
+<select id="scene">
+<option value="Radha and Krishna walking together beside the sacred Yamuna River at golden sunset">Yamuna River Walk</option>
+<option value="Radha and Krishna sitting together on a beautifully decorated flower swing in Vrindavan">Flower Swing (Jhula)</option>
+<option value="Lord Krishna playing his divine flute while Radha lovingly listens beside him">Krishna Playing Flute</option>
+<option value="Radha and Krishna standing together in a beautiful Vrindavan temple courtyard">Vrindavan Temple</option>
+<option value="Radha and Krishna walking through a flower-filled garden with peacocks nearby">Flower Garden</option>
+<option value="Radha and Krishna sharing a peaceful devotional moment beneath a kadamba tree">Kadamba Tree</option>
+<option value="Radha and Krishna standing beside the Yamuna as gentle flower petals float through the air">Floating Flower Petals</option>
+</select>
+
+<label for="style">Visual Style</label>
+<select id="style">
+<option>Ultra-realistic cinematic 8K, natural skin texture</option>
+<option>Photorealistic Indian mythological feature film</option>
+<option>Beautiful high-detail 3D cinematic animation</option>
+<option>Dreamy devotional cinema, realistic lighting</option>
+</select>
+
+<label for="duration">Video Duration</label>
+<select id="duration">
+<option>5 seconds</option>
+<option selected>8 seconds</option>
+<option>10 seconds</option>
+<option>15 seconds</option>
+</select>
+
+<label for="camera">Camera Movement</label>
+<select id="camera">
+<option>Slow cinematic dolly-in with subtle orbit</option>
+<option>Smooth 180-degree camera orbit</option>
+<option>Gentle tracking shot moving alongside the characters</option>
+<option>Slow crane-down followed by a gentle push-in</option>
+<option>Steady close-up with subtle cinematic parallax</option>
+</select>
+
+<label for="lighting">Lighting</label>
+<select id="lighting">
+<option>Warm golden-hour sunlight, natural soft shadows</option>
+<option>Soft moonlight with realistic blue night ambience</option>
+<option>Warm temple lamps and natural golden highlights</option>
+<option>Sun rays through trees, soft volumetric lighting</option>
+</select>
+
+<label>Natural Motion</label>
+<div class="checks">
+<label><input type="checkbox" id="eyes" checked> Natural blinking</label>
+<label><input type="checkbox" id="head" checked> Gentle head movement</label>
+<label><input type="checkbox" id="hands" checked> Natural hand movement</label>
+<label><input type="checkbox" id="cloth" checked> Hair and clothing in breeze</label>
+<label><input type="checkbox" id="environment" checked> Moving leaves and petals</label>
+<label><input type="checkbox" id="continuity" checked> Character consistency</label>
+</div>
+
+<label for="extra">Extra Instructions (Optional)</label>
+<input id="extra" placeholder="Example: Krishna's peacock feather moves gently">
+
+<button class="primary" onclick="makePrompt()">Generate AI Video Prompt</button>
+</div>
+
+<div class="card">
+<h2>🎬 Your Generated Prompt</h2>
+<textarea id="output" placeholder="Your English video prompt will appear here..."></textarea>
+<button class="secondary" onclick="copyPrompt()">Copy Prompt</button>
+<button class="secondary" onclick="downloadPrompt()">Download TXT</button>
+<button class="secondary" onclick="clearPrompt()">Clear</button>
+<p id="status"></p>
+</div>
+</main>
+<footer>Made for devotional creativity • Prompt generator only; video generation requires a compatible AI video service.</footer>
+<script>
+function makePrompt(){
+const scene=document.getElementById('scene').value;
+const style=document.getElementById('style').value;
+const duration=document.getElementById('duration').value;
+const camera=document.getElementById('camera').value;
+const lighting=document.getElementById('lighting').value;
+let motion=[];
+if(document.getElementById('eyes').checked)motion.push('natural eye blinking');
+if(document.getElementById('head').checked)motion.push('subtle realistic head movement');
+if(document.getElementById('hands').checked)motion.push('gentle anatomically correct hand and finger movements');
+if(document.getElementById('cloth').checked)motion.push('soft breeze moving hair, fabric and jewelry naturally');
+if(document.getElementById('environment').checked)motion.push('subtle movement of leaves, flowers and surrounding environment');
+if(document.getElementById('continuity').checked)motion.push('consistent facial features, clothing, jewelry and body proportions throughout the shot');
+const extra=document.getElementById('extra').value.trim();
+document.getElementById('output').value=
+'Create a '+duration+' continuous vertical 9:16 devotional cinematic video.\\n\\n'+
+'SCENE: '+scene+'.\\n\\n'+
+'VISUAL QUALITY: '+style+'. Beautifully detailed traditional Indian clothing, authentic devotional atmosphere, realistic materials, lifelike expressions and physically believable movement. Keep Radha and Krishna visually consistent throughout the entire clip.\\n\\n'+
+'CAMERA: '+camera+'. Smooth, stable cinematic movement, natural perspective and no sudden camera jumps.\\n\\n'+
+'LIGHTING: '+lighting+'. Balanced exposure, realistic shadows and natural skin tones. Avoid an unwanted purple or violet color cast.\\n\\n'+
+'CHARACTER ANIMATION: '+(motion.length?motion.join('; '):'minimal natural movement')+'. The characters must visibly move naturally rather than appearing frozen. Preserve correct anatomy and realistic facial expressions.\\n\\n'+
+'CONTINUITY: One uninterrupted shot, no cuts, no scene changes, no flickering, no morphing, no duplicated limbs, no distorted hands, no changing faces, no sudden costume changes, no unnatural body movement. Keep both characters clearly visible and visually consistent.\\n\\n'+
+(extra?'ADDITIONAL INSTRUCTIONS: '+extra+'.\\n\\n':'')+
+'FORMAT: Vertical 9:16, suitable for Instagram Reels and YouTube Shorts. High detail, cinematic composition, smooth realistic motion.';
+document.getElementById('status').textContent='Prompt generated successfully!';
+}
+function copyPrompt(){
+const t=document.getElementById('output');
+if(!t.value){document.getElementById('status').textContent='Generate a prompt first.';return;}
+t.select();
+if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(t.value).then(()=>document.getElementById('status').textContent='Prompt copied!').catch(()=>{document.execCommand('copy');document.getElementById('status').textContent='Copy attempted. Please check.';});
+}else{
+document.execCommand('copy');
+document.getElementById('status').textContent='Copy attempted. Please check.';
+}
+}
+function downloadPrompt(){
+const t=document.getElementById('output').value;
+if(!t){document.getElementById('status').textContent='Generate a prompt first.';return;}
+const blob=new Blob([t],{type:'text/plain;charset=utf-8'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;a.download='radha-krishna-seedance-prompt.txt';a.click();
+URL.revokeObjectURL(url);
+}
+function clearPrompt(){
+document.getElementById('output').value='';
+document.getElementById('status').textContent='';
+}
+</script>
+</body>
+                                                        </html>
